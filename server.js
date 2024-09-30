@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 // Endpoint to receive the IP address
 app.post('/api/ip', (req, res) => {
-    const ipAddress = req.body.ip;
+    const { ipAddress } = req.body.ip;
     console.log('Received IP Address:', ipAddress);
     res.json({ message: 'IP Address received successfully!' });
 });
